@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@model MVCBasico.Models.Cuenta;
+
+<div class="text-center">
+    <h1 class="display-4">@Model.Saldo</h1>
+
+    <a asp-action="Movimientos" asp-controller="Home" asp-route-idCuenta="@Model.id">Movimientos</a>
+    <a asp-action="Create" asp-controller="Transferencia" asp-route-idCuenta="@Model.id">Transferencias</a>
+    <a asp-action="Alias" asp-controller="Home" asp-route-idCuenta="@Model.id">Modificar alias</a>
+</div>
