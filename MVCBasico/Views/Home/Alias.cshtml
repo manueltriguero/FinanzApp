@@ -1,37 +1,32 @@
 ﻿@model MVCBasico.Models.AliasRequest
 
 @{
-    ViewData["Title"] = "Alias";
+    ViewData["Title"] = "Alias | Banco PNT";
+    Layout = "HomeLayout";
 }
 
-<h1>Modificar</h1>
+<link href="~/css/style.css" rel='stylesheet'>
+<link href="~/css/styleTransferencia.css" rel='stylesheet'>
 
-<h4>Alias</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Alias">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Alias" class="control-label"></label>
-                <input asp-for="Alias" class="form-control" />
-                <span asp-validation-for="Alias" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
-                <input asp-for="IdCuentaOrigen" class="form-control" hidden value="@ViewBag.idCuentaOrigen" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Modificar" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<main>
+    <h4>Modificar Alias</h4>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <form asp-action="Alias">
+        <div class="input-contenedor">
+            <input asp-for="Alias" placeholder="Alias">
+            <span asp-validation-for="Alias" class="text-danger"></span>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger input-contenedor"></div>
+        <div class="botones">
+            <button class="registrar" type="submit">Modificar</button>
+        </div>
+    </form>
+</main>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />

@@ -1,47 +1,44 @@
-﻿@model IEnumerable<MVCBasico.Models.Transferencia>
+﻿@model MVCBasico.Models.TransferenciaRequest
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Transferencia | Banco PNT";
+    Layout = "HomeLayout";
 }
 
-<h1>Index</h1>
+<link href="~/css/style.css" rel='stylesheet'>
+<link href="~/css/styleTransferencia.css" rel='stylesheet'>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Importe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Motivo)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Importe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Motivo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<main>
+    <h4>Transferir</h4>
+
+
+    <form asp-action="Transferir">
+        <div class="input-contenedor">
+            <input asp-for="Importe" placeholder="Importe">
+            <span asp-validation-for="Importe" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="Motivo" placeholder="Motivo">
+            <span asp-validation-for="Motivo" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="CBU" placeholder="CBU">
+            <span asp-validation-for="CBU" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="Alias" placeholder="Alias">
+            <span asp-validation-for="Alias" class="text-danger"></span>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger input-contenedor"></div>
+        <div class="botones">
+            <button class="registrar" type="submit">Transferir</button>
+        </div>
+    </form>
+</main>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />

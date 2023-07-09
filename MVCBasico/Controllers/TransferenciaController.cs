@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCBasico.Context;
 using MVCBasico.Models;
+using MVCBasico.Utils;
 
 namespace MVCBasico.Controllers
 {
+    [ValidarSesion]
     public class TransferenciaController : Controller
     {
         private readonly EscuelaDatabaseContext _context;
@@ -23,7 +26,7 @@ namespace MVCBasico.Controllers
         // GET: Transferencia
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Transferencias.ToListAsync());
+            return View();
         }
 
         // GET: Transferencia/Details/5
@@ -56,30 +59,49 @@ namespace MVCBasico.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Importe,Motivo, CBU, Alias, IdCuentaOrigen")] TransferenciaRequest transferencia)
+        public async Task<IActionResult> Transferir(TransferenciaRequest transferencia)
         {
             if (ModelState.IsValid)
             {
-                Cuenta cuenta = _context.Cuentas.Find(transferencia.IdCuentaOrigen);
+                Cuenta cuenta = _context.Cuentas.Where(cuenta => cuenta.UsuarioId == HttpContext.Session.GetInt32("Usuario")).First();
 
                 if (transferencia.Importe > cuenta.Saldo)
                 {
-                    return BadRequest();
+                    ModelState.AddModelError("Importe", "El importe no puede ser menor al saldo en cuenta");
+                    return View(nameof(Index), transferencia);
                 }
 
 
 
                 Cuenta cuentaDestino = null;
 
-                if (!(transferencia.CBU == 0))
+                if (!(transferencia.CBU is null))
                 {
-                    cuentaDestino = _context.Cuentas.Where(c => c.Cbu == transferencia.CBU).Single();
+                    try
+                    {
+                        cuentaDestino = _context.Cuentas.Where(c => c.Cbu == transferencia.CBU).Single();
+                    } catch (Exception ex)
+                    {
+                        ModelState.AddModelError("CBU", "CBU Inexistente");
+                        return View(nameof(Index), transferencia);
+                    }
+                    
                 } else if (!(transferencia.Alias is null))
                 {
-                    cuentaDestino = _context.Cuentas.Where(c => c.Alias == transferencia.Alias).Single();
+                    try
+                    {
+                        cuentaDestino = _context.Cuentas.Where(c => c.Alias == transferencia.Alias).Single();
+                    } catch (Exception ex)
+                    {
+                        ModelState.AddModelError("Alias", "Alias inexistente");
+                        return View(nameof(Index), transferencia);
+                    }
+                    
                 } else
                 {
-                    return BadRequest();
+                    ModelState.AddModelError(String.Empty, "Debe indicar CBU o Alias");
+                    return View(nameof(Index), transferencia);
+
                 }
 
                 Movimiento salida = new Movimiento()
@@ -115,9 +137,9 @@ namespace MVCBasico.Controllers
                 _context.Update(cuentaDestino);
                 _context.Add(transferenciaE);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Home", new { idCuenta = cuenta.id});
+                return RedirectToAction("Home", "Home");
             }
-            return View(transferencia);
+            return View(nameof(Index), transferencia);
         }
 
         // GET: Transferencia/Edit/5

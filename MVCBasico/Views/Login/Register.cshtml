@@ -1,0 +1,75 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model MVCBasico.Models.RegisterRequest;
+
+@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charsetf="utf-8">
+    <title>Bienvenidos a Nuestro Banco | Banco PNT</title>
+    <link href="~/css/style.css" rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="contenedor"><h4>Registrarse</h4></div>
+    
+
+    <form asp-action="Register">
+        <div class="input-contenedor">
+            <input asp-for="Nombre" placeholder="Nombre">
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="Apellido" placeholder="Apellido">
+            <span asp-validation-for="Apellido" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="FechaNacimiento" placeholder="Fecha de Nacimiento">
+            <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <select id="doc">
+                <option value="DNI" selected>DNI</option>
+                <option value="CI">CI</option>
+                <option value="Pasaporte">Pasaporte</option>
+            </select>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="Documento" type="number" placeholder="Número de Documento">
+            <span asp-validation-for="Documento" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="Telefono" placeholder="Telefono">
+            <span asp-validation-for="Telefono" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="Email"  placeholder="Email">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="Password"  placeholder="Contraseña">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger input-contenedor"></div>
+        <div class="botones">
+            <button class="registrar" type="submit">Registrar</button>
+        </div>
+    </form>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</body>
+</html>

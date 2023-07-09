@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = "";
+}
+
+@model MVCBasico.Models.LoginRequest;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charsetf="utf-8">
+    <title>Bienvenidos a Nuestro Banco | Banco PNT</title>
+    <link href="~/css/style.css" rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="contenedor">
+        <div class="tarjeta">
+            <img src="img/tarjeta.jpg" alt="Tarjeta" id="tarjeta-imagen">
+            <p>No compartas tus datos personales o claves por email, teléfonos o redes sociales.</p>
+        </div>
+    </div>
+    <form asp-action="Login">
+        <div class="input-contenedor">
+            <select id="doc">
+                <option value="DNI" selected>DNI</option>
+                <option value="CI">CI</option>
+                <option value="Pasaporte">Pasaporte</option>
+            </select>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="Documento"  type="number" placeholder="Número de Documento">
+            <span asp-validation-for="Documento" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for= "Email" type="text" placeholder="Usuario">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="input-contenedor">
+            <input asp-for="Password" type="password" placeholder="Contraseña">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger input-contenedor"></div>
+        <div class="botones">
+            <button type="button" class="registrar" onclick="location.href='@Url.Action("Register", "Login")'">Registrarse</button>
+            <button type="submit">Ingresar</button>
+        </div>
+    </form>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</body>
+</html>

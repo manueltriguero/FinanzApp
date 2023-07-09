@@ -1,0 +1,28 @@
+
+
+main{
+    padding: 20px;
+}
+
+h1{
+    margin-top: -10px;
+    padding-bottom: 10px;
+}
+
+table{
+    width: 1000px;
+    border-collapse: collapse;
+}
+
+table th, table td{
+    padding: 10px;
+    text-align: left;
+}
+
+table th:nth-child(2){
+    width: 60%;
+}
+
+table tr:nth-child(even){
+    background-color: #f2f2f2;
+}

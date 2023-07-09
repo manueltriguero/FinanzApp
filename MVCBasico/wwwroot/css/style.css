@@ -1,0 +1,64 @@
+body{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 59px;
+    padding-bottom: 50px;
+    height: 100%;
+}
+
+.tarjeta{
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #0373fc;
+    border-radius: 5px;
+    max-width: 300px;
+}
+
+#tarjeta-imagen{
+    margin-right: 20px;
+    max-width: 100px;
+}
+
+.input-contenedor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+input, select{
+    width: 340px;
+    height: 45px;
+    padding: 5px;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.botones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+button{
+    width: 160px;
+    height: 55px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+button.registrar{
+    background-color: #fff;
+    color: #0373fc;
+    border: 2px solid #0373fc;
+}
+
+

@@ -9,10 +9,9 @@ namespace MVCBasico.Models
 
         public string Motivo { get; set; }
 
-        public long CBU { get; set; }
+        public long? CBU { get; set; }
 
         public string Alias { get; set; }
 
-        public int IdCuentaOrigen { get; set; }
     }
 }

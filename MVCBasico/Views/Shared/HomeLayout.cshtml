@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charsetf="utf-8">
+    <title>@ViewData["Title"]</title>
+    <link href="~/css/layoutStyle.css" rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="barrera-lateral">
+        <ul>
+            <li><a asp-action="Home" asp-controller="Home">Mi Cuenta</a></li>
+            <li><a asp-action="Alias" asp-controller="Home"> Alias</a></li>
+            <li><a asp-action="Index" asp-controller="Transferencia">Transferencias</a></li>
+            <li><a asp-action="Index" asp-controller="Movimiento">Movimientos</a></li>
+        </ul>
+    </div>
+    @RenderBody()
+</body>
+</html>

@@ -1,14 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using MVCBasico.Context;
 using MVCBasico.Models;
+using MVCBasico.Utils;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MVCBasico.Controllers
 {
+    [ValidarSesion]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -21,15 +26,22 @@ namespace MVCBasico.Controllers
             _context = context;
         }
 
-        public IActionResult Index(int idCuenta)
+        public IActionResult Home()
         {
-            Cuenta cuenta = _context.Cuentas.Find(idCuenta);
-            return View(cuenta);
+            List<Cuenta> cuentas = _context.Cuentas.Where(cuenta => cuenta.UsuarioId == HttpContext.Session.GetInt32("Usuario")).ToList();
+
+            return View(cuentas[0]);
         }
 
-        public IActionResult Alias(int idCuenta)
+        public IActionResult Index()
         {
-            ViewBag.idCuentaOrigen = idCuenta;
+            List<Cuenta> cuentas = _context.Cuentas.Where(cuenta => cuenta.UsuarioId == HttpContext.Session.GetInt32("Usuario")).ToList();
+            
+            return View(cuentas[0]);
+        }
+
+        public IActionResult Alias()
+        {
             return View();
         }
 
@@ -48,14 +60,14 @@ namespace MVCBasico.Controllers
                     return View(aliasRequest);
                 }
 
-                Cuenta cuenta = _context.Cuentas.Find(aliasRequest.IdCuentaOrigen);
+                Cuenta cuenta = _context.Cuentas.Where(cuenta => cuenta.UsuarioId == HttpContext.Session.GetInt32("Usuario")).First();
                 cuenta.Alias = aliasRequest.Alias;
                 _context.Update(cuenta);
                 await _context.SaveChangesAsync();
-                return View(nameof(Index), cuenta);
+                return RedirectToAction("Home");
             } else
             {
-                return BadRequest();
+                return View(aliasRequest);
             }
 
             

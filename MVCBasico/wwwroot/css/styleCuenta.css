@@ -1,0 +1,81 @@
+
+main{
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+h1{
+    margin-top: 150px;
+}
+
+.contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.caja-ahorro{
+    width: 250px;
+    height: 210px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-right: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.caja-ahorro h2{
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.info{
+    text-align: center;
+}
+
+.num-cuenta{
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.saldo{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.tarjeta{
+    width: 525px;
+    height: 100px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.tarjeta img{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.descripcion{
+    flex-grow: 1;
+}
+
+.saldo-visa{
+    font-size: 24px;
+    font-weight: bold;
+}

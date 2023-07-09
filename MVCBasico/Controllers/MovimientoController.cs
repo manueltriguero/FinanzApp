@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCBasico.Context;
 using MVCBasico.Models;
+using MVCBasico.Utils;
 
 namespace MVCBasico.Controllers
 {
+    [ValidarSesion]
     public class MovimientoController : Controller
     {
         private readonly EscuelaDatabaseContext _context;
@@ -20,11 +23,13 @@ namespace MVCBasico.Controllers
         }
 
         // GET: Movimiento
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index()
 
         {
-            ViewBag.IdCuenta = id;
-            return View(await _context.Movimientos.Where(m => m.CuentaId == id).ToListAsync());
+            List<Cuenta> cuentas =  await _context.Cuentas.Include(cuenta => cuenta.Movimientos)
+                .Where(cuenta => cuenta.UsuarioId == HttpContext.Session.GetInt32("Usuario")).ToListAsync();
+
+            return View(cuentas[0].Movimientos.OrderByDescending(movimiento => movimiento.Fecha));
         }
 
         // GET: Movimiento/Details/5
