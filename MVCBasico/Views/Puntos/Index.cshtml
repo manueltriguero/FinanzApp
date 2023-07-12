@@ -1,0 +1,14 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "HomeLayout";
+    ViewData["Title"] = "Puntos | Banco PNT";
+}
+
+@model MVCBasico.Models.PuntosVista
+
+<p>Tenes</p>
+<h1>@Model.Puntos puntos</h1>
+
+<a asp-action="Canjear">Canjear Puntos</a>

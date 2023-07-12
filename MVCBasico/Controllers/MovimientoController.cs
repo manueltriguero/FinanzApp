@@ -82,6 +82,7 @@ namespace MVCBasico.Controllers
                     return RedirectToAction(nameof(Index), new { error = "No tiene suficiente dinero"});
                 }
 
+
                 cuenta.Saldo += movimientoRequest.Importe;
                 Movimiento movimiento = new Movimiento()
                 {
@@ -91,10 +92,32 @@ namespace MVCBasico.Controllers
                 };
                 cuenta.Movimientos.Add(movimiento);
                 _context.Update(cuenta);
+
+                agregarPuntos(movimientoRequest.Importe);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index), new { error = "Hubo un error" });
+        }
+
+        private void agregarPuntos(double importe)
+        {
+            Puntos puntos = _context.Puntos.Where(puntos => puntos.UsuarioId == HttpContext.Session.GetInt32("Usuario")).First();
+
+            if (importe > 5000)
+            {
+                puntos.CantPuntos += Constants.PUNTOS_POR_INGRESO;
+            }
+
+            if (importe < 0)
+            {
+                double saldo = puntos.SaldoRemanente + importe * -1;
+                puntos.CantPuntos += ((int)(saldo / Constants.PRECIO_PUNTO));
+                puntos.SaldoRemanente = saldo % Constants.PRECIO_PUNTO;
+            }
+
+            _context.Update(puntos);
         }
 
         // GET: Movimiento/Edit/5

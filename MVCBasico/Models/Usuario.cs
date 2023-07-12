@@ -36,6 +36,12 @@ namespace MVCBasico.Models
 
         public ICollection<Cuenta> Cuentas { get; } = new List<Cuenta>();
 
+        public Puntos Puntos { get; set; } = new Puntos()
+        {
+            CantPuntos = 0,
+            SaldoRemanente = 0
+        };
+
 
     }
 }

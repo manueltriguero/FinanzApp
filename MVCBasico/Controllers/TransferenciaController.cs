@@ -136,10 +136,22 @@ namespace MVCBasico.Controllers
                 _context.Update(cuenta);
                 _context.Update(cuentaDestino);
                 _context.Add(transferenciaE);
+                agregarPuntos(transferencia.Importe);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Home", "Home");
             }
             return View(nameof(Index), transferencia);
+        }
+
+        private void agregarPuntos(double importe)
+        {
+            Puntos puntos = _context.Puntos.Where(puntos => puntos.UsuarioId == HttpContext.Session.GetInt32("Usuario")).First();
+
+            double saldo = puntos.SaldoRemanente + importe;
+            puntos.CantPuntos += ((int)(saldo / Constants.PRECIO_PUNTO));
+            puntos.SaldoRemanente = saldo % Constants.PRECIO_PUNTO;
+
+            _context.Puntos.Update(puntos);
         }
 
         // GET: Transferencia/Edit/5

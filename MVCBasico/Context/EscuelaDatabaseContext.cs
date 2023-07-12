@@ -29,5 +29,7 @@ namespace MVCBasico.Context
 
         public DbSet<Prestamo> Prestamos { get; set; }
 
+        public DbSet<Puntos> Puntos { get; set; }
+
     }
 }
