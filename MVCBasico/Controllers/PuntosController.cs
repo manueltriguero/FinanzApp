@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MVCBasico.Context;
 using MVCBasico.Models;
 using MVCBasico.Utils;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,9 +38,21 @@ namespace MVCBasico.Controllers
 
             Puntos puntos = _context.Puntos.Where(cuenta => cuenta.UsuarioId == HttpContext.Session.GetInt32("Usuario")).First();
 
-            cuenta.Saldo += puntos.CantPuntos / Constants.PUNTOS_POR_PESO;
+            double credito = (double)puntos.CantPuntos / Constants.PUNTOS_POR_PESO;
+
+            Movimiento movimiento = new Movimiento()
+            {
+                Fecha = DateTime.Now,
+                Descripcion = String.Format("Canje de {0} puntos", puntos.CantPuntos),
+                Importe = credito
+            };
+
+            
+            cuenta.Saldo += credito;
 
             puntos.CantPuntos = 0;
+
+            cuenta.Movimientos.Add( movimiento );
 
             _context.Update(puntos);
             _context.Update(cuenta);

@@ -80,6 +80,12 @@ namespace MVCBasico.Controllers
             return View(registerRequest);
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction(nameof(Login));
+        }
+
         private Usuario mapearUsuario(RegisterRequest registerRequest)
         {
             return new Usuario

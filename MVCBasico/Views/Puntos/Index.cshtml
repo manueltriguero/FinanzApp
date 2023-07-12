@@ -8,7 +8,16 @@
 
 @model MVCBasico.Models.PuntosVista
 
-<p>Tenes</p>
-<h1>@Model.Puntos puntos</h1>
+<link href="~/css/stylePuntos.css" rel='stylesheet'>
+<main>
+    <div class="contenedor">
+        <p>Tenes</p>
+    </div>
+    <div class="contenedor">
+        <h1>@Model.Puntos puntos</h1>
+    </div>
+    <div class="contenedor">
+        <a asp-action="Canjear">Canjear Puntos</a>
+    </div>
+</main>
 
-<a asp-action="Canjear">Canjear Puntos</a>

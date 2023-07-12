@@ -17,7 +17,7 @@
                 <h2>Caja de Ahorro en Pesos</h2>
                 <div class="info">
                     <p class="num-cuenta">N°@Model.id</p>
-                    <p class="saldo">$ @Model.Saldo</p>
+                    <p class="saldo">@Html.DisplayFor(model => model.Saldo)</p>
                     <p class="num-cuenta">Alias: @Model.Alias</p>
                 </div>
             </div>

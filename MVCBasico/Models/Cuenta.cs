@@ -8,6 +8,8 @@ namespace MVCBasico.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
+
+        [DataType(DataType.Currency)]
         public double Saldo { get; set; }
         public int Tipo { get; set; }
         public string Alias { get; set; }

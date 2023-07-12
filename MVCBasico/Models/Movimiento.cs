@@ -14,6 +14,7 @@ namespace MVCBasico.Models
 
         public string Descripcion { get; set; }
 
+        [DataType(DataType.Currency)]
         public double Importe { get; set; }
 
         public int CuentaId { get; set; }
