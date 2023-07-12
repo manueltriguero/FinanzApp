@@ -1,46 +1,66 @@
-﻿@model MVCBasico.Models.Movimiento
+﻿@model MVCBasico.Models.MovimientoRequest
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "";
 }
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<!--Modal Body Start-->
 
-<h1>Create</h1>
+<div class="modal-content">
 
-<h4>Movimiento</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Fecha" class="control-label"></label>
-                <input asp-for="Fecha" class="form-control" />
-                <span asp-validation-for="Fecha" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Importe" class="control-label"></label>
-                <input asp-for="Importe" class="form-control" />
-                <span asp-validation-for="Importe" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="CuentaId" class="form-control" hidden value="@Model.CuentaId" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <!--Modal Header Start-->
+    <div class="modal-header">
+        <h4 class="modal-title">Nuevo Movimiento</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
-</div>
+    <!--Modal Header End-->
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <form asp-action="Create" asp-controller="Movimiento" method="post" enctype="multipart/form-data">
+
+        @Html.AntiForgeryToken()
+
+        <div class="modal-body form-horizontal">
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Fecha, new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-10">
+                    <input asp-for="@Model.Fecha" placeholder="Fecha" class="form-control" />
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Importe, new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-10">
+                    <input asp-for="@Model.Importe" class="form-control" placeholder="Importe" />
+                    <span asp-validation-for="Importe" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Descripcion, new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-10">
+                    <input asp-for="@Model.Descripcion" class="form-control" placeholder="Descripcion" />
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+            </div>
+
+
+        </div>
+        <!--Modal Footer Start-->
+        <div class="modal-footer">
+            <button data-dismiss="modal" id="cancel" class="btn btn-default" type="button">Cancel</button>
+            <button class="btn btn-success relative" id="btnSubmit" type="submit">
+                <i class="loader"></i>
+                Crear
+            </button>
+        </div>
+        <!--Modal Footer End-->
+    </form>
+
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<!--Modal Body End-->

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCBasico.Context;
@@ -23,14 +24,22 @@ namespace MVCBasico.Controllers
         }
 
         // GET: Movimiento
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? error)
 
         {
+            if (!(error is null))
+            {
+                ModelState.AddModelError(string.Empty, error);
+            }
+
+
             List<Cuenta> cuentas =  await _context.Cuentas.Include(cuenta => cuenta.Movimientos)
                 .Where(cuenta => cuenta.UsuarioId == HttpContext.Session.GetInt32("Usuario")).ToListAsync();
 
             return View(cuentas[0].Movimientos.OrderByDescending(movimiento => movimiento.Fecha));
         }
+
+
 
         // GET: Movimiento/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -51,11 +60,10 @@ namespace MVCBasico.Controllers
         }
 
         // GET: Movimiento/Create
-        public IActionResult Create(int idCuenta)
+        public IActionResult Create()
         {
-            Movimiento movimiento = new Movimiento();
-            movimiento.CuentaId = idCuenta;
-            return View(movimiento);
+            
+            return PartialView();
         }
 
         // POST: Movimiento/Create
@@ -63,18 +71,30 @@ namespace MVCBasico.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,Descripcion,Importe, CuentaId")] Movimiento movimiento)
+        public async Task<IActionResult> Create (MovimientoRequest movimientoRequest)
         {
             if (ModelState.IsValid)
             {
-                Cuenta cuenta = _context.Cuentas.Find(movimiento.CuentaId);
-                cuenta.Saldo += movimiento.Importe;
+                Cuenta cuenta = _context.Cuentas.Where(cuenta => cuenta.UsuarioId == HttpContext.Session.GetInt32("Usuario")).First();
+
+                if (cuenta.Saldo + movimientoRequest.Importe < 0)
+                {
+                    return RedirectToAction(nameof(Index), new { error = "No tiene suficiente dinero"});
+                }
+
+                cuenta.Saldo += movimientoRequest.Importe;
+                Movimiento movimiento = new Movimiento()
+                {
+                    Fecha = movimientoRequest.Fecha,
+                    Descripcion = movimientoRequest.Descripcion,
+                    Importe = movimientoRequest.Importe
+                };
                 cuenta.Movimientos.Add(movimiento);
                 _context.Update(cuenta);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new {id = movimiento.CuentaId});
+                return RedirectToAction(nameof(Index));
             }
-            return View(movimiento);
+            return RedirectToAction(nameof(Index), new { error = "Hubo un error" });
         }
 
         // GET: Movimiento/Edit/5

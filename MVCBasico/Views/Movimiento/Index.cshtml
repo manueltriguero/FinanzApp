@@ -5,6 +5,7 @@
     ViewData["Title"] = "Movimientos | Banco PNT";
 }
 <link href="~/css/styleMovimientos.css" rel='stylesheet'>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <main>
     <h1>Movimientos</h1>
     <table>
@@ -27,5 +28,13 @@
 
         </tbody>
     </table>
+    <div asp-validation-summary="ModelOnly" class="text-danger input-contenedor"></div>
+    <a class="btn btn-primary popup" data-url="Create" data-toggle="modal" data-target="#modal-create-movimiento" id="MovimientoModel">Nuevo</a>
+    <partial name="Modal" />
 </main>
 <script src="~/js/Movimientos.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/modal.js" asp-append-version="true"></script>
+
+  
